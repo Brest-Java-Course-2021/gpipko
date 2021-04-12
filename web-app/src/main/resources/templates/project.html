@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="../../resources/static/css/bootstrap.css"
+          th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" href="../../resources/static/css/style.css"
+          th:href="@{/css/style.css}">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <title>Projects</title>
+</head>
+<body>
+
+<header>
+    <nav class="navbar navbar-dark bg-dark navbar-expand-sm text-light p-1">
+        <div class="container-fluid">
+            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a href="/" class="navbar-brand"><img src="../../resources/static/img/folder-fill.svg"
+                                                  th:src="@{/img/folder-fill.svg}"
+                                                  height="32" width="32" alt="ProjectLogo"></a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="projects.html"
+                           th:href="@{/projects}">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="authors.html"
+                           th:href="@{/authors}">Authors</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <nav id="main-header"
+         class="ps-1 py-1 mb-3 navbar navbar-light bg-light text-dark">
+        <ul class="navbar-nav float-start">
+            <li class="nav-item" title="Back to list">
+                <a href="projects.html"
+                   th:href="@{/projects}"
+                   class="btn btn-light btn-block">
+                    <i class="bi-arrow-left"></i></a>
+            </li>
+        </ul>
+        <span class="navbar-brand text-uppercase me-auto"
+              th:text="${isNew} ? 'New project' : 'Edit project'">Edit project</span>
+    </nav>
+</header>
+
+<section id="project">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <form id="projectForm"
+                              th:object="${project}"
+                              action="projects.html"
+                              th:action="@{${#httpServletRequest.servletPath}}"
+                              th:method="@{post}">
+
+                            <input id="field_projectId"
+                                   type="hidden"
+                                   th:field="*{projectId}"/>
+
+                            <div class="mb-3">
+                                <label class="form-label"
+                                       for="field_projectName">Project Name</label>
+                                <input class="form-control "
+                                       id="field_projectName"
+                                       type="text" value="MilitaryTech"
+                                       th:field="*{projectName}"/>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label"
+                                       for="field_creationDate">Creation date</label>
+                                <input class="form-control"
+                                       id="field_creationDate"
+                                       type="text" value="Creation date"
+                                       th:field="*{creationDate}"/>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <a href="projects.html"
+                                   th:href="@{/projects}"
+                                   class="btn btn-light me-1"
+                                   title="Cancel">Cancel</a>
+                                <a href="projects.html"
+                                   th:href="@{/projects}"
+                                   th:onclick="@{document.forms['projectForm'].submit(); return false;}"
+                                   class="btn btn-primary"
+                                   title="Save project">Save</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <hr/>
+    <p class="text-center">&copy; 2021</p>
+</footer>
+
+<script src="../../resources/static/js/bootstrap.bundle.min.js"
+        th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

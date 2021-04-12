@@ -3,22 +3,28 @@ package com.epam.gpipko.dao.jdbc;
 import com.epam.gpipko.Project;
 import com.epam.gpipko.ProjectDao;
 import com.epam.gpipko.ProjectDtoDao;
+import com.epam.gpipko.database.SpringJdbcConfig;
 import com.epam.gpipko.dto.ProjectDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(locations = {"classpath*:database.xml", "classpath*:test-dao.xml", "classpath*:dao.xml"})
+@DataJdbcTest
+@Import({ProjectDaoJdbc.class, ProjectDaoDtoJdbc.class})
+@PropertySource({"classpath:daoAuthor.properties","classpath:daoProject.properties"})
+@ContextConfiguration(classes = SpringJdbcConfig.class)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class ProjectDaoJdbcIT {
 
     @Autowired
@@ -60,7 +66,7 @@ class ProjectDaoJdbcIT {
         Assertions.assertNotNull(projects);
         assertTrue(projects.size() > 0);
 
-        projectDao.create(new Project("Test", new Date("2020/01/01")));
+        projectDao.create(new Project("Test", LocalDate.of(2020,01,01)));
 
         List<Project> realProjects = projectDao.findAll();
         Assertions.assertEquals(projects.size() + 1, realProjects.size());
@@ -73,8 +79,8 @@ class ProjectDaoJdbcIT {
         assertTrue(projects.size() > 0);
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-                    projectDao.create(new Project("OilTech", new Date("2021/01/01")));
-                    projectDao.create(new Project("OilTech", new Date("2021/01/01")));
+                    projectDao.create(new Project("OilTech", LocalDate.of(2021,01,01)));
+                    projectDao.create(new Project("OilTech", LocalDate.of(2021,01,01)));
                 }
         );
     }

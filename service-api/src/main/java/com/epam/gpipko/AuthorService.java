@@ -7,9 +7,11 @@ public interface AuthorService {
 
     List<Author> findAll();
 
+    List<Project> getAllProjectId();
+
     Optional<Author> findById(Integer authorId);
 
-    void create(Author author);
+    Integer create(Author author);
 
     Integer update(Author author);
 

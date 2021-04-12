@@ -1,22 +1,29 @@
 package com.epam.gpipko;
 
+import com.epam.gpipko.dao.jdbc.ProjectDaoDtoJdbc;
+import com.epam.gpipko.database.SpringJdbcConfig;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(locations = {"classpath*:database.xml", "classpath*:service-test.xml", "classpath*:dao.xml"})
+@SpringBootTest
+@Import({ProjectServiceImpl.class, ProjectDaoDtoJdbc.class})
+@ContextConfiguration(classes = SpringJdbcConfig.class)
+@ComponentScan(basePackages = {"com.epam.gpipko.dao.jdbc", "com.epam.gpipko.database"})
+@PropertySource({"classpath:daoAuthor.properties","classpath:daoProject.properties"})
 @Transactional
 public class ProjectServiceIT {
 
@@ -55,7 +62,7 @@ public class ProjectServiceIT {
         Assertions.assertNotNull(projectList);
         assertTrue(projectList.size() > 0);
 
-        projectService.create(new Project("ServiceTest", new Date("2021/02/02")));
+        projectService.create(new Project("ServiceTest", LocalDate.of(2021,02,02)));
 
         List<Project> realProjects = projectService.findAll();
         Assertions.assertEquals(projectList.size() + 1, realProjects.size());
@@ -68,8 +75,8 @@ public class ProjectServiceIT {
         assertTrue(projectList.size() > 0);
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-                    projectService.create(new Project("OilTech", new Date("2021/03/03")));
-                    projectService.create(new Project("OilTech", new Date("2021/03/03")));
+                    projectService.create(new Project("OilTech", LocalDate.of(2021,03,03)));
+                    projectService.create(new Project("OilTech", LocalDate.of(2021,03,03)));
                 }
         );
     }
