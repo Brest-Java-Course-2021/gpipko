@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class AuthorServiceImpl implements AuthorService{
+public class AuthorServiceImpl implements AuthorService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthorServiceImpl.class);
 
@@ -28,7 +28,7 @@ public class AuthorServiceImpl implements AuthorService{
     }
 
     @Override
-    public List<Project> getAllProjectId(){
+    public List<Project> getAllProjectId() {
         return authorDao.getAllProjectId();
     }
 
@@ -50,5 +50,9 @@ public class AuthorServiceImpl implements AuthorService{
     @Override
     public Integer delete(Integer authorId) {
         return authorDao.delete(authorId);
+    }
+    @Override
+    public Integer count() {
+        return authorDao.count();
     }
 }

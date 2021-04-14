@@ -27,6 +27,15 @@ public class Author {
         this.projectId = projectId;
     }
 
+    public Author(Integer authorId, String firstName, String lastName, String email, Integer grantSum, Integer projectId) {
+        this.authorId = authorId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.grantSum = grantSum;
+        this.projectId = projectId;
+    }
+
     public Integer getAuthorId() {
         return authorId;
     }

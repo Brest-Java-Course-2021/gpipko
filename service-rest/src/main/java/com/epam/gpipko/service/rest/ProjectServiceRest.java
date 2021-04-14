@@ -78,6 +78,7 @@ public class ProjectServiceRest implements ProjectService {
 
     @Override
     public Integer count() {
-        return null;
+        ResponseEntity responseEntity = restTemplate.getForEntity(url + "/count", Integer.class);
+        return (Integer) responseEntity.getBody();
     }
 }

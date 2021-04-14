@@ -16,5 +16,5 @@ public interface AuthorService {
     Integer update(Author author);
 
     Integer delete(Integer authorId);
-
+    Integer count();
 }

@@ -61,8 +61,13 @@ public class AuthorController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/author/id")
+    @GetMapping(value = "/authors/id")
     public Collection<Project> getProjectId() {
         return authorService.getAllProjectId();
+    }
+
+    @GetMapping(value = "/authors/count")
+    public ResponseEntity<Integer> count() {
+        return new ResponseEntity<>(authorService.count(), HttpStatus.OK);
     }
 }

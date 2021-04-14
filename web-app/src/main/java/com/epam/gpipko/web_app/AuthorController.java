@@ -2,6 +2,7 @@ package com.epam.gpipko.web_app;
 
 import com.epam.gpipko.Author;
 import com.epam.gpipko.AuthorService;
+import com.epam.gpipko.ProjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,12 @@ public class AuthorController {
     AuthorService authorService;
 
     @Autowired
-    public AuthorController(AuthorService authorService) {
+    ProjectService projectService;
+
+    @Autowired
+    public AuthorController(AuthorService authorService, ProjectService projectService) {
         this.authorService = authorService;
+        this.projectService = projectService;
     }
 
     @GetMapping(value = "/authors")
@@ -41,8 +46,8 @@ public class AuthorController {
         Optional<Author> optionalAuthor = authorService.findById(id);
         if (optionalAuthor.isPresent()) {
             model.addAttribute("isNew", false);
-            model.addAttribute("allProjectId", authorService.getAllProjectId());
             model.addAttribute("author", optionalAuthor.get());
+            model.addAttribute("projects", projectService.findAll());
             return "author";
         } else {
             return "redirect:authors";
@@ -55,6 +60,7 @@ public class AuthorController {
         LOGGER.debug("gotoAddAuthorPage({})", model);
         model.addAttribute("isNew", true);
         model.addAttribute("author", new Author());
+        model.addAttribute("projects", projectService.findAll());
         return "author";
     }
 

@@ -83,4 +83,10 @@ public class AuthorServiceRest implements AuthorService {
                 restTemplate.exchange(url + "/" + authorId, HttpMethod.DELETE, entity, Integer.class);
         return result.getBody();
     }
+
+    @Override
+    public Integer count(){
+        ResponseEntity responseEntity = restTemplate.getForEntity(url + "/count", Integer.class);
+        return (Integer) responseEntity.getBody();
+    }
 }

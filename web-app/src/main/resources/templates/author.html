@@ -106,10 +106,11 @@
                                 <select class="form-control"
                                         id="field_projectId"
                                         th:field="*{projectId}"/>
-                                <option th:value="0" th:text="none"></option>
-                                <option th:each=" id : ${allProjectId}"
-                                        th:value="${id.projectId}"
-                                        th:text="${id.projectId}">
+                                <option th:value="${author.projectId}" th:text="${author.projectId}">
+                                </option>
+                                <option th:each=" project : ${projects}"
+                                        th:value="${project.projectId}"
+                                        th:text="${project.projectId}">
                                 </option>
                                 </select>
                             </div>

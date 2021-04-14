@@ -17,4 +17,6 @@ public interface AuthorDao {
 
     Integer delete(Integer authorId);
 
+    Integer count();
+
 }

@@ -65,6 +65,7 @@
                         <tr>
                             <th>Title</th>
                             <th>Avg grantSum</th>
+                            <th>Creation date</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -72,6 +73,7 @@
                         <tr th:each="project : ${projects}">
                             <td th:text="${project.projectName}">MilitaryTech</td>
                             <td th:text="${project.avgGrantSum}">500</td>
+                            <td th:text="${project.creationDate}">2021-24-10</td>
                             <td class="text-end">
                                 <a href="project.html"
                                    th:href="@{|/project/${project.projectId}|}"

@@ -17,6 +17,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -46,6 +47,9 @@ public class AuthorDaoJdbc implements AuthorDao {
 
     @Value("${author.selectAllId}")
     private String selectAllIdSql;
+
+    @Value("${author.count}")
+    private String countSql;
 
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -121,5 +125,11 @@ public class AuthorDaoJdbc implements AuthorDao {
         LOGGER.debug("Delete author by id: {}", authorId);
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("AUTHOR_ID", authorId);
         return namedParameterJdbcTemplate.update(deleteSql, sqlParameterSource);
+    }
+
+    @Override
+    public Integer count() {
+        LOGGER.debug("count()");
+        return namedParameterJdbcTemplate.queryForObject(countSql, new HashMap<>(), Integer.class);
     }
 }
