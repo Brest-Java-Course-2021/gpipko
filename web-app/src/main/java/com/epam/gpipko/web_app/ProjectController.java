@@ -3,15 +3,19 @@ package com.epam.gpipko.web_app;
 import com.epam.gpipko.Project;
 import com.epam.gpipko.ProjectDtoService;
 import com.epam.gpipko.ProjectService;
+import com.epam.gpipko.dto.ProjectDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -35,6 +39,30 @@ public class ProjectController {
         LOGGER.debug("projects()");
         model.addAttribute("projects",projectDtoService.findAllWithAvgGrantSum());
         return "projects";
+    }
+
+    @PostMapping(value = "/projects")
+    public String searchOrderByDate(@ModelAttribute("startDateString") String startDateString,
+                                    @ModelAttribute("endDateString") String endDateString,
+                                    Model model){
+        LocalDate startDate, endDate;
+
+        try {
+            startDate = LocalDate.parse(startDateString);
+        } catch (Exception ex){
+            startDate = LocalDate.of(2000, 1 , 1);
+        }
+
+        try{
+            endDate = LocalDate.parse(endDateString);
+        } catch (Exception ex){
+            endDate = LocalDate.now();
+        }
+
+        List<ProjectDto> projects = projectDtoService.findAllWithFilter(startDate, endDate);
+        model.addAttribute("projects", projects);
+        return "projects";
+
     }
 
     @GetMapping(value = "/project/{id}")

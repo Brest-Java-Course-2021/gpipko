@@ -5,9 +5,11 @@ import com.epam.gpipko.dto.ProjectDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.springframework.http.HttpMethod.GET;
@@ -33,5 +35,13 @@ public class ProjectDtoServiceRest implements ProjectDtoService{
         return restTemplate.exchange(url, GET, null,
                 new ParameterizedTypeReference<List<ProjectDto>>() {})
                 .getBody();
+    }
+
+    @Override
+    public List<ProjectDto> findAllWithFilter(LocalDate startDate, LocalDate endDate) {
+
+        LOGGER.debug("findAllByDate({}, {})", startDate, endDate);
+        ResponseEntity responseEntity = restTemplate.getForEntity(url + "/search/" + startDate + "/" + endDate, List.class);
+        return (List<ProjectDto>) responseEntity.getBody();
     }
 }

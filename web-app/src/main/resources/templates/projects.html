@@ -60,6 +60,13 @@
         <div class="row">
             <div class="col">
                 <div class="card">
+                    <form id="searchByDate" th:action="@{${#httpServletRequest.servletPath}}" th:method="post">
+                        <label for="startDate">Search by date from</label>
+                        <input type="date"   id="startDate" name="startDateString" />
+                        <label for="endDate">to</label>
+                        <input type="date"   id="endDate" name="endDateString" />
+                        <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                    </form>
                     <table class="table table-striped">
                         <thead class="table-dark">
                         <tr>

@@ -97,7 +97,7 @@ public class ProjectDaoJdbc implements ProjectDao {
         SqlParameterSource sqlParameterSource =
                 new MapSqlParameterSource("PROJECT_NAME", project.getProjectName())
                         .addValue("PROJECT_ID", project.getProjectId())
-                        .addValue("CREATION_DATE", project.getCreationDate());;
+                        .addValue("CREATION_DATE", project.getCreationDate());
         return namedParameterJdbcTemplate.update(updateSql, sqlParameterSource);
     }
 

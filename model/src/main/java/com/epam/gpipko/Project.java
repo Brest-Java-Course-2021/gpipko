@@ -15,9 +15,9 @@ public class Project {
 
     private String projectName;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate creationDate;
 
     public Project() {
