@@ -9,11 +9,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -42,9 +44,9 @@ public class ProjectController {
     }
 
     @PostMapping(value = "/projects")
-    public String searchOrderByDate(@ModelAttribute("startDateString") String startDateString,
-                                    @ModelAttribute("endDateString") String endDateString,
-                                    Model model){
+    public String searchByDate(@ModelAttribute("startDateString") String startDateString,
+                               @ModelAttribute("endDateString") String endDateString,
+                               Model model){
         LocalDate startDate, endDate;
 
         try {
@@ -89,17 +91,23 @@ public class ProjectController {
     }
 
     @PostMapping(value = "/project")
-    public String addProject(Project project) {
+    public String addProject(@Valid Project project, BindingResult bindingResult) {
 
         LOGGER.debug("addDProject({}, {})", project);
+        if (bindingResult.hasErrors()) {
+            return "project";
+        }
         this.projectService.create(project);
         return "redirect:/projects";
     }
 
     @PostMapping(value = "/project/{id}")
-    public String updateProject(Project project) {
+    public String updateProject(@Valid Project project, BindingResult bindingResult) {
 
         LOGGER.debug("updateProject({}, {})", project);
+        if (bindingResult.hasErrors()) {
+            return "redirect:/project/" + project.getProjectId();
+        }
         this.projectService.update(project);
         return "redirect:/projects";
     }

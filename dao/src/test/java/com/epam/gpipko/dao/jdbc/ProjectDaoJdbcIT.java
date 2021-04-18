@@ -127,5 +127,14 @@ class ProjectDaoJdbcIT {
         Assertions.assertTrue(avgGrantSumList.size() > 0);
     }
 
+    @Test
+    public void findAllWithFilter(){
+        List<ProjectDto> allProjects = projectDtoDao.findAllWithAvgGrantSum();
+        ProjectDto p1 = allProjects.get(0);
+        ProjectDto p2 = allProjects.get(1);
+        List<ProjectDto> filteredDateList = projectDtoDao.findAllWithFilter(p1.getCreationDate(),p2.getCreationDate());
+        Assertions.assertNotNull(filteredDateList);
+        Assertions.assertTrue(filteredDateList.size() > 0);
+    }
 
 }

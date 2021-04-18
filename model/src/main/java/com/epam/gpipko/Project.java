@@ -6,6 +6,8 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -13,6 +15,8 @@ public class Project {
 
     private Integer projectId;
 
+    @NotBlank(message = "Project name is mandatory!")
+    @Size(max = 255, message = "Project name should not contain more than 255 characters!")
     private String projectName;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")

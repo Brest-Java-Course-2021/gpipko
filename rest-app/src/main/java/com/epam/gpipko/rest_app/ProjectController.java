@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -38,14 +39,14 @@ public class ProjectController {
     }
 
     @PostMapping(value = "/projects", consumes = {"application/json"}, produces = {"application/json"})
-    public ResponseEntity<Integer> createProject(@RequestBody Project project) {
+    public ResponseEntity<Integer> createProject(@Valid @RequestBody Project project) {
         LOGGER.debug("createProject({})", project);
         Integer id = projectService.create(project);
         return new ResponseEntity<>(id, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/projects", consumes = {"application/json"}, produces = {"application/json"})
-    public ResponseEntity<Integer> updateProject(@RequestBody Project project) {
+    public ResponseEntity<Integer> updateProject(@Valid @RequestBody Project project) {
         LOGGER.debug("updateProject({})", project);
         Integer id = projectService.update(project);
         return new ResponseEntity<>(id, HttpStatus.OK);

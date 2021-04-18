@@ -1,6 +1,7 @@
 package com.epam.gpipko.rest_app;
 
 import com.epam.gpipko.Author;
+import com.epam.gpipko.rest_app.exception.RestResponseEntityExceptionHandler;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
@@ -45,6 +46,9 @@ public class AuthorControllerIT {
 
     @Autowired
     protected ObjectMapper objectMapper;
+
+    @Autowired
+    private RestResponseEntityExceptionHandler controllerAdvisor;
 
     protected MockMvc mockMvc;
 
@@ -94,7 +98,7 @@ public class AuthorControllerIT {
         Integer countBefore = authorService.count();
 
         authorService.create(new Author("Test FirstName","Test LastName",
-                "Test Email", 50,1));
+                "Testemail@gmail.com", 50,1));
 
         Integer countAfter = authorService.count();
         Assertions.assertEquals(countBefore + 1, countAfter);
@@ -111,7 +115,7 @@ public class AuthorControllerIT {
         Author author = authors.get(0);
         author.setFirstName("FNAME");
         author.setLastName("LNAME");
-        author.setEmail("EMAIL");
+        author.setEmail("EMAIL@gmail.com");
         author.setGrantSum(10);
         author.setProjectId(1);
         authorService.update(author);
@@ -119,7 +123,7 @@ public class AuthorControllerIT {
         Optional<Author> realAuthor = authorService.findById(author.getAuthorId());
         Assertions.assertEquals("FNAME", realAuthor.get().getFirstName());
         Assertions.assertEquals("LNAME", realAuthor.get().getLastName());
-        Assertions.assertEquals("EMAIL", realAuthor.get().getEmail());
+        Assertions.assertEquals("EMAIL@gmail.com", realAuthor.get().getEmail());
         Assertions.assertEquals(10, realAuthor.get().getGrantSum());
         Assertions.assertEquals(1, realAuthor.get().getProjectId());
     }
@@ -129,7 +133,7 @@ public class AuthorControllerIT {
 
         LOGGER.debug("shouldDeleteAuthor()");
         Integer id = authorService.create(new Author("Test FirstName","Test LastName",
-                "Test Email", 51,1));
+                "TestEmail@gmail.com", 51,1));
         Integer countBefore = authorService.count();
 
         authorService.delete(id);

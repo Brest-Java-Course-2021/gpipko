@@ -1,6 +1,7 @@
 package com.epam.gpipko.rest_app;
 
 import com.epam.gpipko.Project;
+import com.epam.gpipko.rest_app.exception.RestResponseEntityExceptionHandler;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
@@ -47,6 +48,9 @@ public class ProjectControllerIT {
 
     @Autowired
     protected ObjectMapper objectMapper;
+
+    @Autowired
+    private RestResponseEntityExceptionHandler controllerAdvisor;
 
     protected MockMvc mockMvc;
 

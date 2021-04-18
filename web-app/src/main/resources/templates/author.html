@@ -75,6 +75,8 @@
                                        id="field_firstName"
                                        type="text" value="Henry"
                                        th:field="*{firstName}"/>
+                                <td th:if="${#fields.hasErrors('firstName')}"
+                                    th:errors="*{firstName}">First name has incorrect value</td>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label"
@@ -83,6 +85,8 @@
                                        id="field_lastName"
                                        type="text" value="Wotton"
                                        th:field="*{lastName}"/>
+                                <td th:if="${#fields.hasErrors('lastName')}"
+                                    th:errors="*{lastName}">Last name has incorrect value</td>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label"
@@ -91,6 +95,9 @@
                                        id="field_email"
                                        type="text" value="hwotton@gmail.com"
                                        th:field="*{email}"/>
+                                <td th:if="${#fields.hasErrors('email')}"
+                                    th:errors="*{email}">Email has incorrect value
+                                </td>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label"
@@ -99,6 +106,9 @@
                                        id="field_grantSum"
                                        type="text" value="10"
                                        th:field="*{grantSum}"/>
+                                <td th:if="${#fields.hasErrors('grantSum')}"
+                                    th:errors="*{grantSum}">Grant sum has incorrect value
+                                </td>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label"

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -39,14 +40,14 @@ public class AuthorController {
     }
 
     @PostMapping(value = "/authors", consumes = {"application/json"}, produces = {"application/json"})
-    public ResponseEntity<Integer> createAuthor(@RequestBody Author author) {
+    public ResponseEntity<Integer> createAuthor(@Valid @RequestBody Author author) {
         LOGGER.debug("createAuthor({})", author);
         Integer id = authorService.create(author);
         return new ResponseEntity<>(id, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/authors", consumes = {"application/json"}, produces = {"application/json"})
-    public ResponseEntity<Integer> updateProject(@RequestBody Author author) {
+    public ResponseEntity<Integer> updateProject(@Valid @RequestBody Author author) {
         LOGGER.debug("updateAuthor({})", author);
         Integer id = authorService.update(author);
         return new ResponseEntity<>(id, HttpStatus.OK);

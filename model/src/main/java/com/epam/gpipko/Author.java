@@ -1,17 +1,26 @@
 package com.epam.gpipko;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public class Author {
 
     private Integer authorId;
 
+    @Size(max = 255, message = "First name should not contain more than 255 characters!")
     private String firstName;
 
+    @Size(max = 255, message = "Last name should not contain more than 255 characters!")
     private String lastName;
 
+    @Email(message = "Email should be valid!")
     private String email;
 
+    @NotNull(message = "Grant sum is mandatory!")
+    @Min(value = 1, message = "Grant sum should not be less than 1!")
     private Integer grantSum;
 
     private Integer projectId;

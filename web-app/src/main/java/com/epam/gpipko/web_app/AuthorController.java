@@ -8,10 +8,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
@@ -65,17 +67,23 @@ public class AuthorController {
     }
 
     @PostMapping(value = "/author")
-    public String addAuthor(Author author) {
+    public String addAuthor(@Valid Author author, BindingResult bindingResult) {
 
         LOGGER.debug("addAuthor({}, {})", author);
+        if (bindingResult.hasErrors()) {
+            return "author";
+        }
         this.authorService.create(author);
         return "redirect:/authors";
     }
 
     @PostMapping(value = "/author/{id}")
-    public String updateAuthor(Author author) {
+    public String updateAuthor(@Valid Author author, BindingResult bindingResult) {
 
         LOGGER.debug("updateAuthor({}, {})", author);
+        if (bindingResult.hasErrors()) {
+            return "redirect:/author/" + author.getAuthorId();
+        }
         this.authorService.update(author);
         return "redirect:/authors";
     }

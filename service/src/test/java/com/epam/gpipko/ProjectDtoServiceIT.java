@@ -35,4 +35,14 @@ class ProjectDtoServiceIT {
         assertTrue(projectList.size() > 0);
         assertTrue(projectList.get(0).getAvgGrantSum().intValue() > 0);
     }
+
+    @Test
+    public void findAllWithFilter(){
+        List<ProjectDto> allProjects = projectDtoService.findAllWithAvgGrantSum();
+        ProjectDto p1 = allProjects.get(0);
+        ProjectDto p2 = allProjects.get(1);
+        List<ProjectDto> filteredDateList = projectDtoService.findAllWithFilter(p1.getCreationDate(),p2.getCreationDate());
+        assertNotNull(filteredDateList);
+        assertTrue(filteredDateList.size() > 0);
+    }
 }
